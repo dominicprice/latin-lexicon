@@ -25,17 +25,29 @@ body {
 	padding: 10px;
 	background-color: #c7b8a3;
 	display: flex;
-	align-items: right;
+	align-items: center;
 	justify-content: space-between;
+	flex-wrap: wrap;
 }
 
-#searchbar input {
+.inputbox {
+	display: flex;
+}
+
+.inputbox input {
+	box-sizing: border-box;
 	border-radius: 2px 0px 0px 2px;
 	border: 1px solid black;
 	outline: none;
+	height: 2em;
+	font-size: 1em;
 }
 
-#searchbar button {
+.inputbox button {
+	box-sizing: border-box;
+	height: 2em;
+	font-size: 1em;
+	background-color: #eee;
 	border-radius: 0px 2px 2px 0px;
 	border: 1px solid black;
 	border-left: none;

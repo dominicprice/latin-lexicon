@@ -83,22 +83,26 @@ function search() {
 	});
 };
 
-
-let search_btn = $("#search-btn");
-
-search_btn.addEventListener("click", search);
-$("#search").addEventListener("keyup", function(event) {
-	if (event.keyCode === 13) {
-		event.preventDefault();
-		search();
-	}
-});
-
 document.addEventListener("DOMContentLoaded", function() {
-	$("#search").focus();
+	window.onerror = function(message, url, lineNumber) {
+	$("#output").innerHTML = `Error in ${url}:${lineNumber}: ${message}`;
+	return true;
+	}
+	
+	let search_btn = $("#search-btn");
+	let search_input = $("#search");
+	search_btn.addEventListener("click", search);
+	search_input.addEventListener("keyup", function(event) {
+		if (event.keyCode === 13) {
+			event.preventDefault();
+			search();
+		}
+	});
+	
+	search_input.focus();
 	let lastRequest = localStorage.getItem("lastRequest");
 	if (lastRequest) {
-		$("#search").value = lastRequest;
+		search_input.value = lastRequest;
 		search();
 	}
 	else {
