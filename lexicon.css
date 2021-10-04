@@ -1,0 +1,99 @@
+.mirrored {
+	display: inline-block;
+	transform: scale(-1, 1);
+}
+
+html, body {
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	font-family: serif;
+}
+
+#header {
+	padding: 10px;
+	font-size: 1.5em;
+	text-align: center;
+	background-color: #fff0de;
+}
+
+#searchbar {
+	padding: 10px;
+	background-color: #c7b8a3;
+	display: flex;
+	align-items: right;
+	justify-content: space-between;
+}
+
+#searchbar input {
+	border-radius: 2px 0px 0px 2px;
+	border: 1px solid black;
+	outline: none;
+}
+
+#searchbar button {
+	border-radius: 0px 2px 2px 0px;
+	border: 1px solid black;
+	border-left: none;
+	outline: none;
+	cursor: pointer;
+}
+
+#searchbar button:hover {
+	background-color: #ddd;
+}
+
+#searchbar button:active {
+	color: #555;
+}
+
+#output {
+	padding: 10px;
+	font-family: sans-serif;
+}
+
+#output h3 {
+	background-color: #eee;
+	margin: 0px -10px;
+	padding: 10px;
+}
+
+table.wikitable {
+  border: 3px solid #000000;
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+}
+table.wikitable td, table.wikitable th {
+  border: 1px solid #000000;
+  padding: 5px 4px;
+}
+table.wikitable tbody td {
+  font-size: 13px;
+}
+table.wikitable thead {
+  background: #CFCFCF;
+  background: -moz-linear-gradient(top, #dbdbdb 0%, #d3d3d3 66%, #CFCFCF 100%);
+  background: -webkit-linear-gradient(top, #dbdbdb 0%, #d3d3d3 66%, #CFCFCF 100%);
+  background: linear-gradient(to bottom, #dbdbdb 0%, #d3d3d3 66%, #CFCFCF 100%);
+  border-bottom: 3px solid #000000;
+}
+table.wikitable thead th {
+  font-size: 15px;
+  font-weight: bold;
+  color: #000000;
+  text-align: left;
+}
+table.wikitable tfoot {
+  font-size: 14px;
+  font-weight: bold;
+  color: #000000;
+  border-top: 3px solid #000000;
+}
+table.wikitable tfoot td {
+  font-size: 14px;
+}
