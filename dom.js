@@ -68,7 +68,7 @@ class $TabGroup {
 		return elem;
 	}
 	
-	#findTab(name) {
+	findTab(name) {
 		if (typeof name === 'string' || name instanceof String) {
 			for (let i = 0; i < this.tabs.length; ++i) {
 				if (this.tabs[i].btn.innerHTML === name)

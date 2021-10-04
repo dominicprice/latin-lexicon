@@ -3,7 +3,8 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+		<meta name="mobile-web-app-capable" content="yes">
 		<title>Latin Dictionary</title>
 		<link rel="stylesheet" href="lexicon.css">
 	</head>
@@ -13,9 +14,7 @@
 			📜 The Latin Lexicon <span class="mirrored">📜</span>
 		</div>
 		<div id="searchbar">
-			<div>
-				This Latin search is powered by <a href="wiktionary.org">Wiktionary</a>.
-			</div>
+			<div id="search-history"></div>
 			<div class="inputbox">
 				<input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="search">
 				<button id="search-btn">Search</button>
@@ -24,8 +23,14 @@
 		<div id="output">
 		
 		</div>
+		<div id="footer">
+			This Latin search is powered by <a href="wiktionary.org">Wiktionary</a>.
+		</div>
 	</body>
 	
+	<!-- Uncomment for mobile debugging
+	<script src="inline-console.min.js"></script>
+	-->
 	<script src="dom.js"></script>
 	<script src="lexicon.js"></script>
 </html>
