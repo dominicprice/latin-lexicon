@@ -1,5 +1,31 @@
 var maxHistorySize = 15;
 
+function pushSearchHistory(item) {
+	let searchHistory = viewSearchHistory();
+	let pos = searchHistory.findIndex(x => x == item);
+	if (pos !== -1)
+		searchHistory.splice(pos, 1);
+	searchHistory.push(item);
+	if (searchHistory.length >= maxHistorySize)
+		searchHistory.shift();
+	localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
+}
+
+function viewSearchHistory() {
+	let searchHistory = JSON.parse(localStorage.getItem("searchHistory") || "[]");
+	return searchHistory;
+}
+
+function popSearchHistory() {
+	let searchHistory = viewSearchHistory();
+	searchHistory.pop();
+	localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
+}
+
+function clearSearchHistory() {
+	localStorage.setItem("searchHistory", "[]");
+}
+
 // Get the Latin section and attach it to a new div. Not very intuitive, as the page format
 // is very linear with very little nesting, and the DOMParser leaves in all comments and newlines as 
 // #comment and #text nodes which we need to ignore, but we loop through all the children of the first
@@ -19,15 +45,24 @@ function parsePage(root) {
 			switch (curNode.tagName.toLowerCase()) {
 				case "h2":
 					// Reached new section, end tree building
-					if (subsection.childElementCount > 0)
-						res.appendChild(subsection);
 					return res;
 				case "h3":
 					// Start new subsection
-					if (subsection.childElementCount > 0) {
-						res.appendChild(subsection);
-						subsection = $("<div>");
-					}
+					subsection = $("<div>");
+					let header = curNode.cloneNode(true);
+					let associatedSection = subsection;
+					header.addEventListener("click", function() {
+						associatedSection.classList.toggle("hidden");
+					});
+					res.appendChild(header);
+					res.appendChild(subsection);
+				case "hr":
+					// Ignore horizontal rules, we make our own where we want them
+					break;
+				case "h4":
+					// Mark off sub-sub sections with a horizontal rule
+					if (subsection.childElementCount > 0)
+						$("<hr>", { "parent": subsection });
 					subsection.appendChild(curNode.cloneNode(true));
 					break;
 				case "table":
@@ -45,8 +80,6 @@ function parsePage(root) {
 		if (curNode.tagName.toLowerCase() === "h2" && curNode.firstChild.innerHTML === "Latin")
 			inSection = true;
 	}
-	if (subsection.childElementCount > 0)
-		res.appendChild(subsection);
 	return res;
 }
 
@@ -86,6 +119,14 @@ function cleanDOM(root) {
 			link.parentNode.replaceChild(newElem, link);
 		}
 	}
+	
+	// 3) Put wikitables inside table-hscroll divs
+	let wikitables = Array.from($$(".wikitable", root));
+	for (const table of wikitables) {
+		let container = $("<div>", { "class": "table-hscroll" });
+		container.appendChild(table.cloneNode(true));
+		table.parentNode.replaceChild(container, table);
+	}
 }
 
 function displayPage(name, response) {
@@ -94,14 +135,14 @@ function displayPage(name, response) {
 	output.innerHTML = "";
 	let searchHistoryDiv = $("#search-history");
 	searchHistoryDiv.innerHTML = "";
-	let searchHistory = JSON.parse(localStorage.getItem("searchHistory") || "[]");
+	let searchHistory = viewSearchHistory();
 	for (const elem of searchHistory) {
 		$("<a>", { "class": "searchable", "attr:href": "javascript:void(0)", "html": elem, "event:click": search.bind(this, elem), "parent": searchHistoryDiv });
 		$("<span>", { "html": ", " , "parent": searchHistoryDiv });
 	}
 	if (searchHistory.length > 0) {
 		$("<a>", { "class": "searchable", "attr:href": "javascript:void(0)", "html": "(clear)", "parent": searchHistoryDiv, "event:click": function() { 
-			localStorage.setItem("searchHistory", "[]");
+			clearSearchHistory();
 			searchHistoryDiv.innerHTML = "";
 		}});
 	}
@@ -125,6 +166,7 @@ function displayPage(name, response) {
 		return;
 	}
 	cleanDOM(topNode);
+	topNode.prepend($("<h1>", { "html": name }));
 
 	// Append to the page and scroll to top
 	output.appendChild(topNode);
@@ -132,14 +174,7 @@ function displayPage(name, response) {
 }
 
 function search(searchQuery) {
-	let searchHistory = JSON.parse(localStorage.getItem("searchHistory") || "[]")
-	let pos = searchHistory.findIndex(x => x == searchQuery);
-	if (pos !== -1)
-		searchHistory.splice(pos, 1);
-	searchHistory.push(searchQuery);
-	if (searchHistory.length >= maxHistorySize)
-		searchHistory.shift()
-	localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
+	pushSearchHistory(searchQuery);
 	$get("https://en.wiktionary.org/w/api.php", {
 		"action": "parse",
 		"format": "json",
@@ -169,7 +204,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	});
 
 	// Visit the last page we were looking at 
-	let searchHistory = JSON.parse(localStorage.getItem("searchHistory") || "[]")
+	let searchHistory = viewSearchHistory();
 	if (searchHistory.length > 0)
 		search(searchHistory[searchHistory.length - 1]);
 	else

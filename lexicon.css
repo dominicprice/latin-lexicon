@@ -35,6 +35,7 @@ body {
 	justify-content: space-between;
 	flex-wrap: wrap;
 	flex: 0;
+	gap: 10px;
 }
 
 .inputbox {
@@ -83,6 +84,8 @@ body {
 	background-color: #eee;
 	margin: 0px -10px;
 	padding: 10px;
+	margin-top: 10px;
+	cursor: pointer;
 }
 
 #footer {
@@ -97,40 +100,20 @@ a.searchable {
 	text-decoration: underline;
 }
 
-table.wikitable {
-  border: 3px solid #000000;
-  width: 100%;
-  text-align: left;
-  border-collapse: collapse;
+table {
+	border: 1px solid #aaa;
+	border-collapse: collapse;
 }
-table.wikitable td, table.wikitable th {
-  border: 1px solid #000000;
-  padding: 5px 4px;
+
+th, td {
+	background-color: white;
+	border: 1px solid #aaa;
+	border-collapse: collapse;
+	padding: 3px;
 }
-table.wikitable tbody td {
-  font-size: 13px;
-}
-table.wikitable thead {
-  background: #CFCFCF;
-  background: -moz-linear-gradient(top, #dbdbdb 0%, #d3d3d3 66%, #CFCFCF 100%);
-  background: -webkit-linear-gradient(top, #dbdbdb 0%, #d3d3d3 66%, #CFCFCF 100%);
-  background: linear-gradient(to bottom, #dbdbdb 0%, #d3d3d3 66%, #CFCFCF 100%);
-  border-bottom: 3px solid #000000;
-}
-table.wikitable thead th {
-  font-size: 15px;
-  font-weight: bold;
-  color: #000000;
-  text-align: left;
-}
-table.wikitable tfoot {
-  font-size: 14px;
-  font-weight: bold;
-  color: #000000;
-  border-top: 3px solid #000000;
-}
-table.wikitable tfoot td {
-  font-size: 14px;
+
+th {
+	background-color: #ccc;
 }
 
 .table-hscroll {
