@@ -42,8 +42,12 @@ function $(selectors, opts) {
 }
 
 // Get a NodeList of all elements matching a selector, starting the search at parent (defaults to document)
-function $$(selectors, par = document) {
-	return par.querySelectorAll(selectors);
+function $$(selectors, par = document, asArray = false) {
+	let list = par.querySelectorAll(selectors);
+	if (asArray)
+		return Array.from(list);
+	else;
+		return list;
 }
 
 class $TabGroup {

@@ -14,7 +14,7 @@
 			📜 The Latin Lexicon <span class="mirrored">📜</span>
 		</div>
 		<div id="searchbar">
-			<div id="search-history"></div>
+			<div id="favourites"></div>
 			<div class="inputbox">
 				<input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="search">
 				<button id="search-btn">Search</button>
@@ -25,6 +25,16 @@
 		</div>
 		<div id="footer">
 			This Latin search is powered by <a href="wiktionary.org">Wiktionary</a>.
+		</div>
+		
+		<div id="modal-background">
+			<div id="modal-content">
+				<div id="modal-header">
+					<h1 id="modal-title"></h1>
+					<span id="modal-close" onclick="hideModal()">&times;</span>
+				</div>
+				<div id="modal-main"></div>
+			</div>
 		</div>
 	</body>
 	
